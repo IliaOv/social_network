@@ -1,6 +1,7 @@
-.item {
-  color: forestgreen;
+.postBlock {
+  padding: 10px;
 }
-.item img {
-  width: 50px;
+
+.posts {
+  margin-top: 10px;
 }

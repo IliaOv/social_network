@@ -7,16 +7,17 @@
   padding: 10px;
 }
 
-.dialogsItems .active {
+.dialogsItems .active{
   color: goldenrod;
 }
 
 .dialog {
-
+  color: #fff;
 }
 
 .messages {
   padding: 10px;
+  color: #fff;
 }
 
 .message {
