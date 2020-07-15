@@ -1,60 +1,84 @@
-let rerenderEntireTree = () => {
-  console.log('State was changed');
-};
+const ADD_POST = 'ADD-POST',
+  UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT',
+  ADD_MESSAGE = 'ADD-MESSAGE',
+  UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 
-let state = {
+let store = {
+  _state: {
+    profilePage: {
+      posts: [
+        {id: 1, message: "Hi, how are you?", likesCount: 12},
+        {id: 2, message: "My first post!", likesCount: 5}
+      ],
+      newPostText: 'it-kamasutra.com'
+    },
 
-  profilePage: {
-    posts: [
-      {id: 1, message: "Hi, how are you?", likesCount: 12},
-      {id: 2, message: "My first post!", likesCount: 5}
-    ],
-    newPostText: 'it-kamasutra.com'
+    dialogsPage: {
+      messages: [
+        {id: 1, message: "Hi"},
+        {id: 2, message: "Yo"},
+        {id: 3, message: "Yo"},
+        {id: 4, message: "Bye"}
+      ],
+      newMessageText: "What's up?",
+      dialogs: [
+        {id: 1, name: "Dimych"},
+        {id: 2, name: "Andrey"},
+        {id: 3, name: "Sveta"},
+        {id: 4, name: "Sasha"},
+      ]
+    },
+
+    sideBar: {
+      friends: [
+        {id: 1, name: "Dimych"},
+        {id: 2, name: "Andrey"},
+        {id: 3, name: "Sveta"}
+      ]
+    }
+  },
+  _callSubscriber() {
+    console.log('State was changed');
   },
 
-  dialogsPage: {
-    messages: [
-      {id: 1, message: "Hi"},
-      {id: 2, message: "Yo"},
-      {id: 3, message: "Yo"},
-      {id: 4, message: "Bye"}
-    ],
-    dialogs: [
-      {id: 1, name: "Dimych"},
-      {id: 2, name: "Andrey"},
-      {id: 3, name: "Sveta"},
-      {id: 4, name: "Sasha"},
-    ]
+  getState() {
+    return this._state;
+  },
+  subscribe(observer) {
+    this._callSubscriber = observer;
   },
 
-  sideBar: {
-    friends: [
-      {id: 1, name: "Dimych"},
-      {id: 2, name: "Andrey"},
-      {id: 3, name: "Sveta"}
-    ]
+  dispatch(action) {
+    if (action.type === ADD_POST) {
+      let newPost = {
+        id: 3,
+        message: this._state.profilePage.newPostText,
+        likesCount: 0
+      };
+      this._state.profilePage.posts.push(newPost);
+      this._state.profilePage.newPostText = '';
+      this._callSubscriber(this._state);
+    } else if (action.type === UPDATE_NEW_POST_TEXT) {
+      this._state.profilePage.newPostText = action.newText;
+      this._callSubscriber(this._state);
+    } else if (action.type === ADD_MESSAGE) {
+      let newMessage = {
+        id: 5,
+        message: this._state.dialogsPage.newMessageText
+      };
+      this._state.dialogsPage.messages.push(newMessage);
+      this._state.dialogsPage.newMessageText = '';
+      this._callSubscriber(this._state);
+    } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
+      this._state.dialogsPage.newMessageText = action.newMessage;
+      this._callSubscriber(this._state);
+    }
   }
-
 };
 
-export const addPost = () => {
-  let newPost = {
-    id: 3,
-    message: state.profilePage.newPostText,
-    likesCount: 0
-  };
-  state.profilePage.posts.push(newPost);
-  state.profilePage.newPostText = '';
-  rerenderEntireTree(state);
-};
+export const addPostActionCreator = () => ({type: ADD_POST});
+export const updateNewPostTextActionCreator = (text) => ({type: UPDATE_NEW_POST_TEXT, newText: text});
+export const addMessageActionCreator = () => ({type: ADD_MESSAGE});
+export const updateNewMessageTextActionCreator = (text) => ({type: UPDATE_NEW_MESSAGE_TEXT, newMessage: text});
 
-export const updateNewPostText = (newText) => {
-  state.profilePage.newPostText = newText;
-  rerenderEntireTree(state);
-};
-
-export const subscribe = (observer) => {
-  rerenderEntireTree = observer;
-};
-
-export default state;
+export default store;
