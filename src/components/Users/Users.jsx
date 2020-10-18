@@ -4,24 +4,23 @@ import userPhoto from "../../assets/images/user.png";
 import {NavLink} from "react-router-dom";
 
 let Users = (props) => {
-  let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize),
-    pages = [];
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i)
-  }
-
-  return <div>
-    <div>
-      {pages.map(p => {
-        return <span key={p}
-                     className={props.currentPage === p ? styles.selectedPage : undefined}
-                     onClick={() => props.onPageChanged(p)}>
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize) - 270,
+        pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
+    }
+    return <div>
+        <div className={styles.pages}>
+            {pages.map(p => {
+                return <span key={p}
+                             className={props.currentPage === p ? styles.selectedPage : undefined}
+                             onClick={() => props.onPageChanged(p)}>
             {p}
           </span>
-      })}
-    </div>
+            })}
+        </div>
 
-    {props.users.map(u => <div key={u.id}>
+        {props.users.map(u => <div key={u.id}>
       <span>
         <div>
           <NavLink to={'/profile/' + u.id}>
@@ -32,13 +31,13 @@ let Users = (props) => {
         </div>
         <div>
           {u.followed
-            ? <button disabled={props.followingInProgress.some(id => id === u.id)}
-                      onClick={() => props.unfollow(u.id)}>Unfollow</button>
-            : <button disabled={props.followingInProgress.some(id => id === u.id)}
-                      onClick={() => props.follow(u.id)}>Follow</button>}
+              ? <button disabled={props.followingInProgress.some(id => id === u.id)}
+                        onClick={() => props.unfollow(u.id)}>Unfollow</button>
+              : <button disabled={props.followingInProgress.some(id => id === u.id)}
+                        onClick={() => props.follow(u.id)}>Follow</button>}
         </div>
       </span>
-      <span>
+            <span>
         <span>
           <div>{u.name}</div>
           <div>{u.status}</div>
@@ -48,8 +47,8 @@ let Users = (props) => {
           <div>{'u.location.city'}</div>
         </span>
       </span>
-    </div>)}
-  </div>
+        </div>)}
+    </div>
 };
 
 export default Users;
