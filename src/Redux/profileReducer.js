@@ -36,17 +36,17 @@ export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 export const setStatus = (status) => ({type: SET_STATUS, status});
 
 export const getUserProfile = (userId) => (dispatch) => {
-    usersAPI.getProfile(userId)
+    return userId ? usersAPI.getProfile(userId)
         .then(response => {
             dispatch(setUserProfile(response.data));
-        });
+        }) : null;
 };
 
 export const getUserStatus = (userId) => (dispatch) => {
-    profileAPI.getStatus(userId)
+    return userId ? profileAPI.getStatus(userId)
         .then(response => {
             dispatch(setStatus(response.data));
-        });
+        }) : null;
 };
 
 export const updateUserStatus = (status) => (dispatch) => {

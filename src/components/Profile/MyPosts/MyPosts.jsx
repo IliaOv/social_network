@@ -6,44 +6,42 @@ import {maxLengthCreator, required} from "../../../utils/validators/validators";
 import {Textarea} from "../../common/FormsControls/FormsControls";
 
 const MyPosts = (props) => {
+    console.log('RENDER');
+    let postElements =
+            props.posts.map(p => <Post message={p.message} like={p.likesCount} key={p.id}/>),
+        addNewPost = (values) => {
+            props.addPost(values.newPostText);
+        };
 
-  let postElements =
-      props.posts.map(p => <Post message={p.message} like={p.likesCount} key={p.id}/>),
-
-    addNewPost = (values) => {
-      props.addPost(values.newPostText);
-    };
-
-
-  return (
-    <div className={s.postBlock}>
-      <h3>My posts</h3>
-      <div>
-        <AddNewPostFormRedux onSubmit={addNewPost}/>
-      </div>
-      <div className={s.posts}>
-        {postElements}
-      </div>
-    </div>
-  )
+    return (
+        <div className={s.postBlock}>
+            <h3>My posts</h3>
+            <div>
+                <AddNewPostFormRedux onSubmit={addNewPost}/>
+            </div>
+            <div className={s.posts}>
+                {postElements}
+            </div>
+        </div>
+    )
 };
 
 const maxLength10 = maxLengthCreator(10);
 
 const AddNewPostForm = (props) => {
-  return (
-    <form onSubmit={props.handleSubmit}>
-      <div>
-        <Field name='newPostText'
-               component={Textarea}
-               validate={[required, maxLength10]}
-               placeholder='Post message'/>
-      </div>
-      <div>
-        <button>Add post</button>
-      </div>
-    </form>
-  )
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field name='newPostText'
+                       component={Textarea}
+                       validate={[required, maxLength10]}
+                       placeholder='Post message'/>
+            </div>
+            <div>
+                <button>Add post</button>
+            </div>
+        </form>
+    )
 };
 
 const AddNewPostFormRedux = reduxForm({form: 'profileAddNewPostForm'})(AddNewPostForm);
