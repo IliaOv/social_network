@@ -16,40 +16,40 @@ import {initializeApp} from "./Redux/appReducer";
 import Preloader from "./components/common/Preloader/Preloader";
 
 class App extends Component {
-  componentDidMount() {
-    this.props.initializeApp();
-  }
-
-  render() {
-    if (!this.props.initialized) {
-      return <Preloader/>
+    componentDidMount() {
+        this.props.initializeApp();
     }
-    return (
-      <div className='app-wrapper'>
-        <HeaderContainer/>
-        <Navbar/>
-        <div className='app-wrapper-content'>
-          <Route path='/dialogs'
-                 render={() => <DialogsContainer/>}/>
-          <Route path='/profile/:userId?'
-                 render={() => <ProfileContainer/>}/>
-          <Route path='/users'
-                 render={() => <UsersContainer/>}/>
-          <Route path='/login'
-                 render={() => <Login/>}/>
-          <Route path='/news' render={() => <News/>}/>
-          <Route path='/music' render={() => <Music/>}/>
-          <Route path='/settings' render={() => <Settings/>}/>
-        </div>
-      </div>
-    );
-  }
+
+    render() {
+        if (!this.props.initialized) {
+            return <Preloader/>
+        }
+        return (
+            <div className='app-wrapper'>
+                <HeaderContainer/>
+                <Navbar/>
+                <div className='app-wrapper-content'>
+                    <Route path='/dialogs'
+                           render={() => <DialogsContainer/>}/>
+                    <Route path='/profile/:userId?'
+                           render={() => <ProfileContainer/>}/>
+                    <Route path='/users'
+                           render={() => <UsersContainer/>}/>
+                    <Route path='/login'
+                           render={() => <Login/>}/>
+                    <Route path='/news' render={() => <News/>}/>
+                    <Route path='/music' render={() => <Music/>}/>
+                    <Route path='/settings' render={() => <Settings/>}/>
+                </div>
+            </div>
+        );
+    }
 }
 
 const mapStateToProps = (state) => ({
-  initialized: state.app.initialized
+    initialized: state.app.initialized
 });
 
 export default compose(
-  withRouter,
-  connect(mapStateToProps, {initializeApp}))(App);
+    withRouter,
+    connect(mapStateToProps, {initializeApp}))(App);
