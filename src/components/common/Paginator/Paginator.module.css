@@ -1,12 +1,22 @@
 .selectedPage {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .pages {
-  margin-bottom: 50px;
+    margin: 25px 5px;
 }
 
 .pages span {
-  margin: 0 5px;
-  cursor: pointer;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.pageNumber {
+    padding: 2px;
+    border: 1px solid grey;
+}
+
+.pageNumber.selectedPage {
+    font-weight: bold;
+    border-color: black;
 }
