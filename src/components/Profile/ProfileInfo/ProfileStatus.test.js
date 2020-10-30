@@ -18,7 +18,7 @@ describe("ProfileStatus component", () => {
         const component = create(<ProfileStatus status="social-network"/>);
         const root = component.root;
         expect(() => {
-            let input = root.findByType('input');
+            root.findByType('input');
         }).toThrow();
     });
     test("<input> should be displayed in editMode instead of span", () => {
